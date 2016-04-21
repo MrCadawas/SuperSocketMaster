@@ -219,19 +219,26 @@ public class SuperSocketMaster{
       if(clientConnection.socketObject != null){
         System.out.println("Trying to close server connection to clinet");
         try{
-          clientConnection.socketObject.shutdownInput();
-          clientConnection.socketObject.shutdownOutput();
-          clientConnection.socketObject.close();
-          clientConnection.outBuffer.close();
-          clientConnection.inBuffer.close();
-          clientConnection.socketObject = null;
-          clientConnection.inBuffer = null;
-          clientConnection.outBuffer = null;
-          clientConnection.strIncomingText = null;
-          System.out.println("Done closing server connection to client");
-          clientconnections.remove(clientConnection);
-          clientConnection = null;
-          System.out.println("Server removed a client connection.  Current Size: "+clientconnections.size());
+          // Since two methods might be running this code simultaneously
+          // Some of the objects might be null
+          // So catch the null pointer exception
+          // the first method that accesses this should close everything correctly
+          try{
+            clientConnection.socketObject.shutdownInput();
+            clientConnection.socketObject.shutdownOutput();
+            clientConnection.socketObject.close();
+            clientConnection.outBuffer.close();
+            clientConnection.inBuffer.close();
+            clientConnection.socketObject = null;
+            clientConnection.inBuffer = null;
+            clientConnection.outBuffer = null;
+            clientConnection.strIncomingText = null;
+            System.out.println("Done closing server connection to client");
+            clientconnections.remove(clientConnection);
+            clientConnection = null;
+            System.out.println("Server removed a client connection.  Current Size: "+clientconnections.size());
+          }catch(NullPointerException e){
+          }
         }catch(IOException e){ 
         }
       }
@@ -291,20 +298,29 @@ public class SuperSocketMaster{
         clientconnections = null;
       }else{
         // If client, just kill the socket
-        // might already be closed
+        // This might be called buy two areas simultaneously!
+        // Might be called by the disconnecting while loop in the run method
+        // Might be called by the disconnect method.
         if(socketObject != null){
           System.out.println("Trying to close the client conneccion");
           try{
-            socketObject.shutdownInput();
-            socketObject.shutdownOutput();
-            socketObject.close();
-            outBuffer.close();
-            inBuffer.close();
-            socketObject = null;
-            inBuffer = null;
-            outBuffer = null;
-            strIncomingText = null;
-            System.out.println("Done closing client connection");
+            // Since two methods might be running this code simultaneously
+            // Some of the objects might be null
+            // So catch the null pointer exception
+            // the first method that accesses this should close everything correctly
+            try{
+              socketObject.shutdownInput();
+              socketObject.shutdownOutput();
+              socketObject.close();
+              outBuffer.close();
+              inBuffer.close();
+              socketObject = null;
+              inBuffer = null;
+              outBuffer = null;
+              strIncomingText = null;
+              System.out.println("Done closing client connection");
+            }catch(NullPointerException e){
+            }
           }catch(IOException e){ 
           }
         }
