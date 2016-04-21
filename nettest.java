@@ -60,8 +60,9 @@ public class nettest implements ActionListener{
       }
       
     }else if(evt.getSource() == texttosend){
-      ssm.sendText(texttosend.getText());
-      
+      if(ssm != null){
+        ssm.sendText(texttosend.getText());
+      }
     }else if(evt.getSource() == ssm){
       textrecieved.append(ssm.readText() + "\n");
     }else if(evt.getSource() == discBut){
