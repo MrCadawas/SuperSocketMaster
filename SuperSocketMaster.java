@@ -217,7 +217,7 @@ public class SuperSocketMaster{
     // Might be called by the disconnect method.
     public void removeClient(ClientConnection clientConnection){
       if(clientConnection.socketObject != null){
-        System.out.println("Trying to close server connection to clinet");
+        System.out.println("Trying to close server connection to client");
         try{
           // Since two methods might be running this code simultaneously
           // Some of the objects might be null
