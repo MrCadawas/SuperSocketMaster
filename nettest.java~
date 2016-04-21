@@ -24,55 +24,55 @@ public class nettest implements ActionListener{
   
   public void actionPerformed(ActionEvent evt){
     if(evt.getSource() == clientBut){
-      serverBut.setEnabled(false); 
-      clientBut.setEnabled(false); 
-      ipaddress.setEnabled(false);
-      port.setEnabled(false);
-      ssm = new SuperSocketMaster(ipaddress.getText(), Integer.parseInt(port.getText()), this);
-      boolean gotConnect = ssm.connect();
-      if(gotConnect){
-        discBut.setEnabled(true);
-        textrecieved.append("My Address: "+ssm.getMyAddress()+"\n");
-        textrecieved.append("My Hostname: "+ssm.getMyHostname()+"\n");
-      }else{
-        serverBut.setEnabled(true); 
-        clientBut.setEnabled(true); 
-        ipaddress.setEnabled(true);
-        port.setEnabled(true);
-      }
-      
+     serverBut.setEnabled(false); 
+     clientBut.setEnabled(false); 
+     ipaddress.setEnabled(false);
+     port.setEnabled(false);
+     ssm = new SuperSocketMaster(ipaddress.getText(), Integer.parseInt(port.getText()), this);
+     boolean gotConnect = ssm.connect();
+     if(gotConnect){
+       discBut.setEnabled(true);
+     }else{
+            serverBut.setEnabled(true); 
+            clientBut.setEnabled(true); 
+            ipaddress.setEnabled(true);
+            port.setEnabled(true);
+     }
+     textrecieved.append("My Address: "+ssm.getMyAddress()+"\n");
+     textrecieved.append("My Hostname: "+ssm.getMyHostname()+"\n");
+
     }else if(evt.getSource() == serverBut){
-      serverBut.setEnabled(false); 
-      clientBut.setEnabled(false); 
-      ipaddress.setEnabled(false);
-      port.setEnabled(false);     
-      ssm = new SuperSocketMaster(Integer.parseInt(port.getText()), this);
-      boolean gotConnect = ssm.connect();
-      if(gotConnect){
-        discBut.setEnabled(true);
-        textrecieved.append("My Address: "+ssm.getMyAddress()+"\n");
-        textrecieved.append("My Hostname: "+ssm.getMyHostname()+"\n");
-      }else{
-        serverBut.setEnabled(true); 
-        clientBut.setEnabled(true); 
-        ipaddress.setEnabled(true);
-        port.setEnabled(true);
-      }
-      
+     serverBut.setEnabled(false); 
+     clientBut.setEnabled(false); 
+     ipaddress.setEnabled(false);
+     port.setEnabled(false);     
+     ssm = new SuperSocketMaster(Integer.parseInt(port.getText()), this);
+     boolean gotConnect = ssm.connect();
+     if(gotConnect){
+       discBut.setEnabled(true);
+     }else{
+       serverBut.setEnabled(true); 
+       clientBut.setEnabled(true); 
+       ipaddress.setEnabled(true);
+       port.setEnabled(true);
+     }
+     textrecieved.append("My Address: "+ssm.getMyAddress()+"\n");
+     textrecieved.append("My Hostname: "+ssm.getMyHostname()+"\n");
+
     }else if(evt.getSource() == texttosend){
       ssm.sendText(texttosend.getText());
-      
+
     }else if(evt.getSource() == ssm){
       textrecieved.append(ssm.readText() + "\n");
     }else if(evt.getSource() == discBut){
-      serverBut.setEnabled(true); 
-      clientBut.setEnabled(true); 
-      ipaddress.setEnabled(true);
-      port.setEnabled(true); 
-      ssm.disconnect();
-      discBut.setEnabled(false);
+     serverBut.setEnabled(true); 
+     clientBut.setEnabled(true); 
+     ipaddress.setEnabled(true);
+     port.setEnabled(true); 
+     ssm.disconnect();
+     discBut.setEnabled(false);
     }
-    
+
   }
   
   public nettest(){
@@ -141,9 +141,9 @@ public class nettest implements ActionListener{
   }
   
   public static void main(String[] args){
-    nettest nt = new nettest(); 
-    
-    
+   nettest nt = new nettest(); 
+
+
   }
   
   

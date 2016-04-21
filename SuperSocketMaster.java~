@@ -216,8 +216,8 @@ public class SuperSocketMaster{
     // Might be called by the disconnecting while loop in the run method
     // Might be called by the disconnect method.
     public void removeClient(ClientConnection clientConnection){
+      System.out.println("Trying to close server connection to clinet");
       if(clientConnection.socketObject != null){
-        System.out.println("Trying to close server connection to clinet");
         try{
           clientConnection.socketObject.shutdownInput();
           clientConnection.socketObject.shutdownOutput();
@@ -290,10 +290,10 @@ public class SuperSocketMaster{
         serverSocketObject = null;
         clientconnections = null;
       }else{
+        System.out.println("Trying to close the client conneccion");
         // If client, just kill the socket
         // might already be closed
         if(socketObject != null){
-          System.out.println("Trying to close the client conneccion");
           try{
             socketObject.shutdownInput();
             socketObject.shutdownOutput();
