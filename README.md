@@ -10,3 +10,5 @@ Once a connection is made, a socket object is created and connects to the clinet
 This class also allows you to create a client object that creates a socket object that connects to the server
 
 The nettest.java file is included to demo the SuperSocketMaster class
+
+I also hope to use this as an example repository for my students to demonstrate code versioning and collaborative programming
