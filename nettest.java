@@ -17,6 +17,7 @@ public class nettest implements ActionListener{
   JTextField texttosend;
   JLabel texttosendlabel;
   JTextArea textrecieved;
+  JScrollPane theScroll;
   JLabel textrecievedlabel;
   JButton discBut;
   
@@ -65,6 +66,9 @@ public class nettest implements ActionListener{
       }
     }else if(evt.getSource() == ssm){
       textrecieved.append(ssm.readText() + "\n");
+      textrecieved.setCaretPosition(textrecieved.getDocument().getLength());
+
+      
     }else if(evt.getSource() == discBut){
       serverBut.setEnabled(true); 
       clientBut.setEnabled(true); 
@@ -128,9 +132,10 @@ public class nettest implements ActionListener{
     textrecievedlabel.setLocation(0, 200);
     thePanel.add(textrecievedlabel);
     textrecieved = new JTextArea();
-    textrecieved.setSize(300,350);
-    textrecieved.setLocation(0, 225);
-    thePanel.add(textrecieved);  
+    theScroll = new JScrollPane(textrecieved);
+    theScroll.setSize(300,350);
+    theScroll.setLocation(0, 225);
+    thePanel.add(theScroll);  
     discBut = new JButton("Disconnect");
     discBut.setSize(300, 25);
     discBut.setLocation(0,575);
