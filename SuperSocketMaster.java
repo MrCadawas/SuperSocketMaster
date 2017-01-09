@@ -191,6 +191,7 @@ public class SuperSocketMaster{
     public void actionPerformed(ActionEvent evt){
       if(evt.getSource() == theTimer){
         System.out.println("Heartbeat");
+        this.sendText("Heartbeat");
       }
     }
     
@@ -279,7 +280,7 @@ public class SuperSocketMaster{
         while (strIncomingText != null) {
           try {
             strIncomingText = inBuffer.readLine();
-            if(strIncomingText != null){
+            if(strIncomingText != null && !strIncomingText.equals("Heartbeat")){
               this.parentssm.strIncomingText = strIncomingText;
               this.parentssm.postActionEvent();
             }
@@ -305,6 +306,7 @@ public class SuperSocketMaster{
         }
         serverSocketObject = null;
         clientconnections = null;
+        theTimer.stop();
       }else{
         // If client, just kill the socket
         // This might be called buy two areas simultaneously!
@@ -333,6 +335,7 @@ public class SuperSocketMaster{
           }catch(IOException e){ 
           }
         }
+        theTimer.stop();
       }
     }
     public boolean openConnection(){
@@ -348,6 +351,8 @@ public class SuperSocketMaster{
         Thread t1 = new Thread(this);
         t1.start();
         System.out.println("Server port opened.  Listening to incoming client connections");
+        // Heartbeat start
+        theTimer.start();
         return true;
       }else{
         // Client style connection.
@@ -363,6 +368,8 @@ public class SuperSocketMaster{
         Thread t1 = new Thread(this);
         t1.start();
         System.out.println("Client connected to server.  Listening for incoming data");
+        // Heartbeat start
+        theTimer.start();
         return true;
       }
     }
@@ -391,7 +398,7 @@ public class SuperSocketMaster{
       while (strIncomingText != null) {
         try {
           strIncomingText = inBuffer.readLine();
-          if(strIncomingText != null){
+          if(strIncomingText != null && !strIncomingText.equals("Heartbeat")){
             // Send to all other clients except for this recieving one
             for (int intCounter = 0; intCounter < socketConnection.clientconnections.size(); intCounter++) {
               if(socketConnection.clientconnections.get(intCounter) != this){
