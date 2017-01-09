@@ -190,7 +190,7 @@ public class SuperSocketMaster{
     Timer theTimer;
     public void actionPerformed(ActionEvent evt){
       if(evt.getSource() == theTimer){
-        System.out.println("Heartbeat");
+        //System.out.println("Heartbeat");
         this.sendText("Heartbeat");
       }
     }
