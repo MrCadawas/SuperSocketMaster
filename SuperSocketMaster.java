@@ -377,8 +377,8 @@ public class SuperSocketMaster{
       this.strServerIP = strServerIP;
       this.intPort = intPort;
       this.parentssm = parentssm;
-      // Attempting Heartbeat to verify if client is connected
-      theTimer = new Timer(1000, this);
+      // Heartbeat to verify if socket is connected
+      theTimer = new Timer(500, this);
       
     }
   }
