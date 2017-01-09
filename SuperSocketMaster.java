@@ -1,6 +1,7 @@
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.AWTEventMulticaster;
+import javax.swing.Timer;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.InetAddress;
@@ -172,7 +173,7 @@ public class SuperSocketMaster{
     * Client opens a socket and starts listening for data
     * *****************************************************************/
   
-  private class SocketConnection implements Runnable{
+  private class SocketConnection implements Runnable, ActionListener{
     SuperSocketMaster parentssm = null;
     int intPort = 1337;
     String strServerIP = null;
@@ -185,6 +186,14 @@ public class SuperSocketMaster{
     String strMyHostname;
     Vector<ClientConnection> clientconnections = new Vector<ClientConnection>();
     boolean blnListenForClients = true;
+    
+    Timer theTimer;
+    public void actionPerformed(ActionEvent evt){
+      if(evt.getSource() == theTimer){
+        System.out.println("Heartbeat");
+      }
+    }
+    
     public boolean sendText(String strText) {
       if (strServerIP == null || strServerIP.equals("")) {
         // Server mode sending text needs to send to all clients
@@ -361,6 +370,9 @@ public class SuperSocketMaster{
       this.strServerIP = strServerIP;
       this.intPort = intPort;
       this.parentssm = parentssm;
+      // Attempting Heartbeat to verify if client is connected
+      theTimer = new Timer(1000, this);
+      
     }
   }
   private class ClientConnection implements Runnable{
