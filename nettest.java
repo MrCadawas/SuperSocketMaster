@@ -67,7 +67,7 @@ public class nettest implements ActionListener{
     }else if(evt.getSource() == ssm){
       textrecieved.append(ssm.readText() + "\n");
       textrecieved.setCaretPosition(textrecieved.getDocument().getLength());
-
+      
       
     }else if(evt.getSource() == discBut){
       serverBut.setEnabled(true); 
@@ -143,7 +143,20 @@ public class nettest implements ActionListener{
     discBut.setEnabled(false);
     thePanel.add(discBut);
     
+    // Needed for Windows. But not in macOS
+    // When one closes the window, disconnect any open sockets
+    // Seems to do it automatically in macOS but not in windows
+    theFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+      @Override
+      public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+        if(ssm != null){
+          ssm.disconnect();
+        }
+      }
+    });
+    
     theFrame.setVisible(true);
+    
   }
   
   public static void main(String[] args){
