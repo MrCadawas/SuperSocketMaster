@@ -204,6 +204,9 @@ public class SuperSocketMaster{
         for (int intCounter = 0; intCounter < clientconnections.size(); intCounter++) {
           clientconnections.get(intCounter).sendText(strText);
         }
+        // restarting Heartbeat after last message that was sent.
+        // No need to send heartbeat if there are lots of network messages being sent
+        theTimer.restart();
         return true;
       } else {
         // Client mode is much easier.
@@ -215,6 +218,9 @@ public class SuperSocketMaster{
             return false;
           }else{
             outBuffer.println(strText); 
+            // restarting Heartbeat after last message that was sent.
+            // No need to send heartbeat if there are lots of network messages being sent
+            theTimer.restart();
             return true;
           }
           
