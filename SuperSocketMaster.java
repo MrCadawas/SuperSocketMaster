@@ -378,7 +378,10 @@ public class SuperSocketMaster{
       this.intPort = intPort;
       this.parentssm = parentssm;
       // Heartbeat to verify if socket is connected
-      theTimer = new Timer(500, this);
+      // Shouldn't be real time heartbeat check/keepalive
+      // Therefore will beat every 10 seconds
+      // Anyone wanting to real time disconnect should use the disconnect method
+      theTimer = new Timer(10000, this);
       
     }
   }
