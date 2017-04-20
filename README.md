@@ -12,3 +12,6 @@ This class also allows you to create a client object that creates a socket objec
 The nettest.java file is included to demo the SuperSocketMaster class
 
 I also hope to use this as an example repository for my students to demonstrate code versioning and collaborative programming
+
+The Javadoc for this class can be found here:
+http://staugustinechs.ca/SuperSocketMaster
