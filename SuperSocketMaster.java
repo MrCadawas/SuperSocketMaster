@@ -15,6 +15,7 @@ import java.io.PrintWriter;
 import java.io.InputStreamReader;
 import java.util.Vector;
 import java.util.Enumeration;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * <h1>SuperSocketMaster</h1>
@@ -32,6 +33,7 @@ public class SuperSocketMaster{
   private int intPort = 1337;
   private String strServerIP = null;
   private String strIncomingText = null;
+  private ReentrantLock strIncomingTextLock = new ReentrantLock();
   private SocketConnection soccon = null;
   transient ActionListener actionListener = null;
   // Methods
@@ -287,8 +289,10 @@ public class SuperSocketMaster{
           try {
             strIncomingText = inBuffer.readLine();
             if(strIncomingText != null && !strIncomingText.equals("Heartbeat")){
+              this.parentssm.strIncomingTextLock.lock();
               this.parentssm.strIncomingText = strIncomingText;
               this.parentssm.postActionEvent();
+              this.parentssm.strIncomingTextLock.unlock();
             }
           } catch (IOException e) {
           }        
@@ -415,8 +419,10 @@ public class SuperSocketMaster{
               }
             }
             // Then set text
+            this.parentssm.strIncomingTextLock.lock();
             this.parentssm.strIncomingText = strIncomingText;
             this.parentssm.postActionEvent();
+            this.parentssm.strIncomingTextLock.unlock();
           }
         } catch (IOException e) {
         }         
